@@ -21,104 +21,113 @@ struct RecentsScreen: View {
     var body: some View {
         
         NavigationStack {
-            
-            ScrollView(.vertical) {
+            ZStack {
                 
-                LazyVStack(alignment: .leading, spacing: 10, pinnedViews: [.sectionHeaders]) {
+                Color.background
+                
+                ScrollView(.vertical) {
                     
-                    Section {
+                    LazyVStack(alignment: .leading, spacing: 10, pinnedViews: [.sectionHeaders]) {
                         
-                        Text("Transactions Overview")
-                            .font(.system(size: 25, design: .serif))
-                            .bold()
-                        
-                        FilterTransactionsView(startDate: startDate, endDate: endDate) { transactions in
+                        Section {
                             
-                            //MARK: -  OverviewCardView
-                            OverviewCardView(startDate: $startDate, endDate: $endDate, income: total(transactions, type: .income), expense: total(transactions, type: .expense))
+                           
                             
-                            
-                            //MARK: - Segmented Control
-                            SegmentedControl()
-                            
-                            
-                            //MARK: - Transaction Cards
-                            ForEach(transactions.filter({ $0.transactionType == selectedType.rawValue })) { transaction in
-                                NavigationLink {
-                                    AddTransactionView(editTransaction: transaction)
-                                } label: {
-                                    TransactionCardView(transaction: transaction)
-                                }
-                            }
-                        }
-                        
-                        
-                    } header: {
-                        
-                        VStack(alignment: .leading, spacing: 5) {
-                            HStack(spacing: 10) {
-                                Text("Spendee")
-                                    .font(.system(size: 30, design: .serif))
-                                    .bold()
-                                    
-                                Spacer()
+                            FilterTransactionsView(startDate: startDate, endDate: endDate) { transactions in
                                 
-                                Button {
-                                    isShowingFilterView.toggle()
-                                } label: {
-                                    Image(systemName: "slider.horizontal.3")
-                                        .foregroundStyle(.white)
-                                        .background {
-                                            Capsule()
-                                                .rotationEffect(Angle(degrees: 180))
-                                                .frame(width: 40, height: 55)
-                                                .foregroundStyle(.accent)
-                                        }
+                                //MARK: -  OverviewCardView
+                                OverviewCardView(startDate: $startDate, endDate: $endDate, income: total(transactions, type: .income), expense: total(transactions, type: .expense))
+                                
+                                
+                                //MARK: - Segmented Control
+                                SegmentedControl()
+                                
+                                
+                                //MARK: - Transaction Cards
+                                ForEach(transactions.filter({ $0.transactionType == selectedType.rawValue })) { transaction in
+                                    
+                                    TransactionCardView(transaction: transaction)
+                                    
+                                    
+                                    
+                                    
+                                    //                                NavigationLink {
+                                    //                                    AddTransactionView(editTransaction: transaction)
+                                    //                                } label: {
+                                    //                                    TransactionCardView(transaction: transaction)
+                                    //                                }
                                 }
-
                             }
-                            .padding(.bottom)
-                            .padding(.horizontal, 10)
-                        }
-                        .hSpacing(.leading)
-                        .background {
-                            VStack(spacing: 0) {
-                                Rectangle()
-                                    .fill(.ultraThinMaterial)
-                                Divider()
+                            
+                            
+                        } header: {
+                            
+                            VStack(alignment: .leading, spacing: 5) {
+                                HStack(spacing: 10) {
+                                    Text("Spendee")
+                                        .font(.system(size: 50, design: .serif))
+                                        .bold()
+                                    
+                                    Spacer()
+                                    
+                                    Button {
+                                        isShowingFilterView.toggle()
+                                    } label: {
+                                        Image(systemName: "slider.horizontal.3")
+                                            .foregroundStyle(.white)
+                                            .background {
+                                                Capsule()
+                                                    .rotationEffect(Angle(degrees: 180))
+                                                    .frame(width: 40, height: 55)
+                                                    .foregroundStyle(.accent)
+                                            }
+                                    }
+                                    
+                                }
+                                .padding(.bottom)
+                                
                             }
-                            .padding(.horizontal, -15)
-                            .padding(.top, -(safeArea.top + 15))
-
+                            .hSpacing(.leading)
+                            .background {
+                                VStack(spacing: 0) {
+                                    Rectangle()
+                                        .fill(.ultraThinMaterial)
+                                   
+                                }
+                                .padding(.horizontal, -15)
+                                .padding(.top, -(safeArea.top + 15))
+                            }
                         }
                     }
+                    .padding(15)
                 }
-                .padding(15)
-            }
-            .blur(radius: isShowingFilterView ? 8 : 0)
-            .sheet(isPresented: $isAddingTransactions) {
-                withAnimation(.easeInOut) {
-                    AddTransactionView()
-                }
-            }
-            .overlay(alignment: .bottomTrailing) {
-                AddTransactionButton()
-            }
-            .overlay {
-                if isShowingFilterView {
-                    DateFilterView(start: startDate, end: endDate) { start, end in
-                        startDate = start
-                        endDate = end
-                        isShowingFilterView = false
-                    } onCancel: {
-                        isShowingFilterView = false
+                .blur(radius: isShowingFilterView ? 8 : 0)
+                .sheet(isPresented: $isAddingTransactions) {
+                    withAnimation(.easeInOut) {
+                        AddTransactionView()
                     }
-                    .transition(.move(edge: .leading))
-                    
                 }
                 
+                .overlay(alignment: .bottomTrailing) {
+                    AddTransactionButton()
+                }
+                .overlay {
+                    if isShowingFilterView {
+                        DateFilterView(start: startDate, end: endDate) { start, end in
+                            startDate = start
+                            endDate = end
+                            isShowingFilterView = false
+                        } onCancel: {
+                            isShowingFilterView = false
+                        }
+                        .transition(.move(edge: .leading))
+                        
+                    }
+                    
+                }
+                .animation(.snappy, value: isShowingFilterView)
             }
-            .animation(.snappy, value: isShowingFilterView)
+            
         }
     }
 }
@@ -149,13 +158,18 @@ extension RecentsScreen {
         HStack {
             ForEach(TransactionType.allCases, id: \.rawValue) { type in
                 Text(type.rawValue)
+                    .foregroundStyle(.white)
+                    .bold()
+                    
                     .font(.system(.subheadline, design: .serif))
                     .hSpacing()
                     .padding(.vertical, 10)
                     .background {
                         if selectedType == type {
                             Capsule()
-                                .fill(Color.accent.opacity(0.2))
+                                .fill(
+                                    LinearGradient(colors: [Color.theme.gradient1, Color.theme.gradient2, Color.theme.gradient3], startPoint: .trailing, endPoint: .leading)
+                                )
                                 .matchedGeometryEffect(id: "ACTIVATAB", in: animation)
                         }
                     }
@@ -169,7 +183,7 @@ extension RecentsScreen {
                 
             }
         }
-        .background(Color.gray.opacity(0.2), in: .capsule)
+        .background(Color.gray.opacity(0.5), in: .capsule)
         
     }
     
@@ -185,7 +199,8 @@ extension RecentsScreen {
                 .bold()
                 .background {
                     Capsule()
-                        .foregroundStyle(.accent)
+                        .foregroundStyle( LinearGradient(colors: [Color("Color1"), Color("Color2"), Color("Color3")], startPoint: .trailing, endPoint: .leading)
+                        )
                 }
         }
         .padding()

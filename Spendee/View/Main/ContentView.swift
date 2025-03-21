@@ -14,6 +14,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
+            
             TabView(selection: $currentTab) {
                 RecentsScreen()
                     .tag(0)
@@ -24,8 +25,9 @@ struct ContentView: View {
                 SettingsScreen()
                     .tag(3)
             }
-            .ignoresSafeArea()
-        }
+           
+            .edgesIgnoringSafeArea(.all)
+        
         
         ZStack {
             HStack {
@@ -39,6 +41,7 @@ struct ContentView: View {
                 
                 
             }
+            
         }
         .padding(.horizontal)
         .padding(.top, 5)
@@ -46,7 +49,7 @@ struct ContentView: View {
             Color.white.shadow(color: .gray.opacity(0.5), radius: 3, x: 2)
                 .ignoresSafeArea()
         )
-        
+    }
     }
 }
 
@@ -62,7 +65,7 @@ extension ContentView {
             
             VStack {
                 Image(systemName: imageName)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(tab == currentTab ? .white : .gray)
                     .padding(15)
                     .background {
                         if self.currentTab == tab {

@@ -13,7 +13,7 @@ struct TransactionCardView: View {
     
     let transaction: Transaction
     var body: some View {
-        SwipeAction(cornerRadius: 10, direction: .trailing) {
+       
             HStack(spacing: 25) {
                 Image(systemName: transaction.icon)
                     .padding(.horizontal, 5)
@@ -27,15 +27,14 @@ struct TransactionCardView: View {
                
                 VStack(alignment: .leading) {
                     Text(transaction.title)
-                    
                         .font(.system(size: 20, design: .serif))
                         .bold()
                         .foregroundStyle(.black)
                     Text(transaction.date.dateAsString())
                         .font(.subheadline)
                         .foregroundStyle(.secondaryText)
-                    
                 }
+                
                 Spacer()
                 Text(transaction.amount.asCurrencyString())
                     .font(.title3)
@@ -48,15 +47,10 @@ struct TransactionCardView: View {
             .padding()
             .background {
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.gray, lineWidth: 1)
+                    .foregroundStyle(.white)
                     
-                
             }
-        } actions: {
-            Action(tint: .red, icon: "trash") {
-                context.delete(transaction)
-            }
-        }
+      
 
 
 
