@@ -27,5 +27,28 @@ extension View {
             .frame(maxWidth: .infinity, alignment: alignment)
     }
     
+    var numberFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 2
+        return formatter
+    }
+    
+    var currencySymbol: String {
+        let locale = Locale.current
+        return locale.currencySymbol ?? ""
+    }
+    
+    
+    
+    @available(iOSApplicationExtension, unavailable)
+    var safeArea: UIEdgeInsets {
+        if let windowScene = (UIApplication.shared.connectedScenes.first as? UIWindowScene) {
+            return windowScene.keyWindow?.safeAreaInsets ?? .zero
+        }
+        
+        return .zero
+    }
     
 }

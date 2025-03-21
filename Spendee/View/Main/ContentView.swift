@@ -50,7 +50,7 @@ struct ContentView: View {
     }
 }
 
-#Preview {
+#Preview(traits: .sampleTransactionData) {
     ContentView()
 }
 
