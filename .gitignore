@@ -11,6 +11,8 @@ DerivedData/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata/
+*.xcdebugger
+*.xcbreakpoints
 *.xccheckout
 
 # Swift Package Manager
