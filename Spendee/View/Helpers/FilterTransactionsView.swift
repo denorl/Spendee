@@ -24,8 +24,8 @@ struct FilterTransactionsView<Content: View>: View {
     }
     
     
-    init(searchText: String, transactionType: TransactionType, @ViewBuilder content: @escaping ([Transaction]) -> Content) {
-        let rawValue = transactionType.rawValue
+    init(searchText: String, transactionType: TransactionType?, @ViewBuilder content: @escaping ([Transaction]) -> Content) {
+        let rawValue = transactionType?.rawValue ?? ""
         let predicate = #Predicate<Transaction> { transaction in
             return transaction.title.localizedStandardContains(searchText) && (rawValue.isEmpty ? true : transaction.transactionType == rawValue)
         }

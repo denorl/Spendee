@@ -31,7 +31,7 @@ struct RecentsScreen: View {
                         
                         Section {
                             
-                           
+                            
                             
                             FilterTransactionsView(startDate: startDate, endDate: endDate) { transactions in
                                 
@@ -46,57 +46,44 @@ struct RecentsScreen: View {
                                 //MARK: - Transaction Cards
                                 ForEach(transactions.filter({ $0.transactionType == selectedType.rawValue })) { transaction in
                                     
-                                    TransactionCardView(transaction: transaction)
-                                    
-                                    
-                                    
-                                    
-                                    //                                NavigationLink {
-                                    //                                    AddTransactionView(editTransaction: transaction)
-                                    //                                } label: {
-                                    //                                    TransactionCardView(transaction: transaction)
-                                    //                                }
+                                    Menu {
+                                        Button(role: .destructive) {
+                                            modelContext.delete(transaction)
+                                        } label: {
+                                            HStack {
+                                                Text("Delete")
+                                                Image(systemName: "trash")
+                                            }
+                                        }
+                                    } label: {
+                                        TransactionCardView(transaction: transaction)
+                                    } primaryAction: {
+                                        print("Is tapped")
+                                    }
                                 }
                             }
                             
                             
                         } header: {
                             
-                            VStack(alignment: .leading, spacing: 5) {
-                                HStack(spacing: 10) {
-                                    Text("Spendee")
-                                        .font(.system(size: 50, design: .serif))
-                                        .bold()
-                                    
-                                    Spacer()
-                                    
-                                    Button {
-                                        isShowingFilterView.toggle()
-                                    } label: {
-                                        Image(systemName: "slider.horizontal.3")
-                                            .foregroundStyle(.white)
-                                            .background {
-                                                Capsule()
-                                                    .rotationEffect(Angle(degrees: 180))
-                                                    .frame(width: 40, height: 55)
-                                                    .foregroundStyle(.accent)
-                                            }
-                                    }
-                                    
+                            HeaderView(header: "Spendee", headerSize: 50, headerFontWeight: .bold, headerFontDesign: .serif) {
+                                Button {
+                                    isShowingFilterView.toggle()
+                                } label: {
+                                    Image(systemName: "slider.horizontal.3")
+                                        .foregroundStyle(.white)
+                                        .background {
+                                            Capsule()
+                                                .rotationEffect(Angle(degrees: 180))
+                                                .frame(width: 40, height: 55)
+                                                .foregroundStyle(.accent)
+                                        }
                                 }
-                                .padding(.bottom)
-                                
                             }
-                            .hSpacing(.leading)
-                            .background {
-                                VStack(spacing: 0) {
-                                    Rectangle()
-                                        .fill(.ultraThinMaterial)
-                                   
-                                }
-                                .padding(.horizontal, -15)
-                                .padding(.top, -(safeArea.top + 15))
-                            }
+                            
+                            
+                            
+                            
                         }
                     }
                     .padding(15)
@@ -160,7 +147,7 @@ extension RecentsScreen {
                 Text(type.rawValue)
                     .foregroundStyle(.white)
                     .bold()
-                    
+                
                     .font(.system(.subheadline, design: .serif))
                     .hSpacing()
                     .padding(.vertical, 10)
@@ -199,8 +186,9 @@ extension RecentsScreen {
                 .bold()
                 .background {
                     Capsule()
-                        .foregroundStyle( LinearGradient(colors: [Color("Color1"), Color("Color2"), Color("Color3")], startPoint: .trailing, endPoint: .leading)
+                        .foregroundStyle( LinearGradient(colors: [Color.theme.gradient1, Color.theme.gradient2, Color.theme.gradient3], startPoint: .trailing, endPoint: .leading)
                         )
+                        .shadow(radius: 3)
                 }
         }
         .padding()

@@ -22,7 +22,7 @@ extension Transaction {
         
         //                   Sample data to create
         let transactions = [
-            Transaction(title: "Compra nel Coop", amount: 348.96, icon: "cart", date: Date.now, category: .groceries, transactionType: .expense),
+            Transaction(title: "Coop", amount: 348.96, icon: "cart", date: Date.now, category: .groceries, transactionType: .expense),
             Transaction(title: "Salary", amount: 1500, icon: "banknote.fill", date: Date.distantPast, category: .salary, transactionType: .income)
         ]
         

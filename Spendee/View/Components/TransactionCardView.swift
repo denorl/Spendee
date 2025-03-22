@@ -32,7 +32,7 @@ struct TransactionCardView: View {
                         .foregroundStyle(.black)
                     Text(transaction.date.dateAsString())
                         .font(.subheadline)
-                        .foregroundStyle(.secondaryText)
+                        .foregroundStyle(.secondaryText) 
                 }
                 
                 Spacer()
@@ -44,10 +44,13 @@ struct TransactionCardView: View {
             
         
             .frame(maxWidth: .infinity)
+            .frame(height: 50)
             .padding()
             .background {
                 RoundedRectangle(cornerRadius: 10)
                     .foregroundStyle(.white)
+                    .shadow(radius: 2)
+                    
                     
             }
       

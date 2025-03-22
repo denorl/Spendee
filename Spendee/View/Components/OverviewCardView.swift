@@ -21,6 +21,7 @@ struct OverviewCardView: View {
                 .foregroundStyle(
                     LinearGradient(colors: [Color.theme.gradient1, Color.theme.gradient2, Color.theme.gradient3], startPoint: .trailing, endPoint: .leading)
                     )
+                .shadow(radius: 2)
                
                 .frame(height: 200)
                 
