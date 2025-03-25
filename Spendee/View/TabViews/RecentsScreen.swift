@@ -57,9 +57,12 @@ struct RecentsScreen: View {
                                         }
                                     } label: {
                                         TransactionCardView(transaction: transaction)
+                                           
                                     } primaryAction: {
                                         print("Is tapped")
+                                    
                                     }
+                                    
                                 }
                             }
                             
@@ -75,7 +78,7 @@ struct RecentsScreen: View {
                                         .background {
                                             Capsule()
                                                 .rotationEffect(Angle(degrees: 180))
-                                                .frame(width: 40, height: 55)
+                                                .frame(width: 45, height: 60)
                                                 .foregroundStyle(.accent)
                                         }
                                 }
@@ -88,6 +91,7 @@ struct RecentsScreen: View {
                     }
                     .padding(15)
                 }
+               
                 .blur(radius: isShowingFilterView ? 8 : 0)
                 .sheet(isPresented: $isAddingTransactions) {
                     withAnimation(.easeInOut) {

@@ -21,7 +21,7 @@ struct TransactionCardView: View {
                     .background {
                         Capsule()
                             .rotationEffect(Angle(degrees: 180))
-                            .frame(width: 40, height: 55)
+                            .frame(width: 45, height: 60)
                             .foregroundStyle(.accent)
                     }
                

@@ -18,27 +18,32 @@ struct HeaderView<Content: View>: View {
     var body: some View {
         
         
-        HStack(spacing: 10) {
-            Text(header)
-                .font(.system(size: headerSize, weight: headerFontWeight, design: headerFontDesign))
-                .bold()
-            
-            Spacer()
-            
-            topTrailingButton()
-        }
-        .padding(.bottom, 30)
-        .padding(.horizontal, 10)
-        
-        .hSpacing(.leading)
-        .background {
-            VStack(spacing: 0) {
-                Rectangle()
-                    .fill(.ultraThinMaterial)
+        ZStack {
+            Color.background
+                .ignoresSafeArea()
+            HStack(spacing: 10) {
+                Text(header)
+                    .font(.system(size: headerSize, weight: headerFontWeight, design: headerFontDesign))
+                    .bold()
+                
+                Spacer()
+                
+                topTrailingButton()
+                    .padding(.bottom, 20)
             }
-            .padding(.horizontal, -15)
-            .padding(.top, -(safeArea.top + 15))
+            .padding(.bottom, 5)
+            .padding(.horizontal, 10)
             
+            .hSpacing(.leading)
+            .background {
+                VStack(spacing: 0) {
+                    Rectangle()
+                        .fill(.ultraThinMaterial)
+                }
+                .padding(.horizontal, -15)
+                .padding(.top, -(safeArea.top + 15))
+                
+            }
         }
     }
     
