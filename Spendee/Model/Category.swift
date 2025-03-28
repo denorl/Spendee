@@ -5,6 +5,7 @@
 //  Created by Denis's MacBook on 21/3/25.
 //
 import Foundation
+import SwiftUI
 
 enum Category: String, CaseIterable {
     
@@ -73,4 +74,6 @@ extension Category {
         case .other: return "questionmark.circle.fill"
         }
     }
+    
+
 }

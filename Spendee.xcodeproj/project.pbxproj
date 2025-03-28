@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		08F580792D94B1F10003D398 /* Flow in Frameworks */ = {isa = PBXBuildFile; productRef = 08F580782D94B1F10003D398 /* Flow */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		08CC574B2D877BC300A8CFD3 /* Spendee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spendee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08F580792D94B1F10003D398 /* Flow in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = Spendee;
 			packageProductDependencies = (
+				08F580782D94B1F10003D398 /* Flow */,
 			);
 			productName = Spendee;
 			productReference = 08CC574B2D877BC300A8CFD3 /* Spendee.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 08CC57422D877BC300A8CFD3;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				08F580772D94B1F10003D398 /* XCRemoteSwiftPackageReference "SwiftUI-Flow" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 08CC574C2D877BC300A8CFD3 /* Products */;
 			projectDirPath = "";
@@ -324,6 +333,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		08F580772D94B1F10003D398 /* XCRemoteSwiftPackageReference "SwiftUI-Flow" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tevelee/SwiftUI-Flow.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		08F580782D94B1F10003D398 /* Flow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 08F580772D94B1F10003D398 /* XCRemoteSwiftPackageReference "SwiftUI-Flow" */;
+			productName = Flow;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 08CC57432D877BC300A8CFD3 /* Project object */;
 }
