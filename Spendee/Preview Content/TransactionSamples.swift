@@ -25,12 +25,13 @@ extension Transaction {
 //            Transaction(title: "Coop", amount: 348.96, icon: "cart", date: Date.now, category: .groceries, transactionType: .expense),
           
 //            Transaction(title: "Weekly Groceries", amount: 60.75, icon: "cart.fill", date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!, category: .groceries, transactionType: .expense),
-            Transaction(title: "Monthly Salary", amount: 2800.00, icon: "creditcard.fill", date: Calendar.current.date(byAdding: .day, value: -20, to: Date())!, category: .salary, transactionType: .income),
+            Transaction(title: "Monthly Salary", amount: 2800.00, icon: "creditcard.fill", date: Calendar.current.date(byAdding: .day, value: -50, to: Date())!, category: .salary, transactionType: .income),
 //            Transaction(title: "Bus Ticket", amount: 2.50, icon: "bus.fill", date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, category: .transportation, transactionType: .expense),
 //            Transaction(title: "Netflix Subscription", amount: 13.99, icon: "tv.fill", date: Calendar.current.date(byAdding: .day, value: -10, to: Date())!, category: .subscriptions, transactionType: .expense),
-            Transaction(title: "Freelance Project", amount: 950.00, icon: "laptopcomputer", date: Calendar.current.date(byAdding: .day, value: -5, to: Date())!, category: .freelance, transactionType: .income),
-//            Transaction(title: "Dinner Out", amount: 42.30, icon: "fork.knife.circle.fill", date: Calendar.current.date(byAdding: .day, value: -40, to: Date())!, category: .foodAndDrinks, transactionType: .expense),
-//            Transaction(title: "Stock Dividends", amount: 150.00, icon: "chart.line.uptrend.xyaxis", date: Calendar.current.date(byAdding: .day, value: -20, to: Date())!, category: .investments, transactionType: .income),
+            Transaction(title: "Freelance Project", amount: 950.00,  icon: "laptopcomputer", date: Calendar.current.date(byAdding: .day, value: -20, to: Date())!, category: .freelance, transactionType: .income),
+//            Transaction(title: "Dinner Out", amount: 42.30, icon: "fork.knife.circle.fill", date: Calendar.current.date(byAdding: .day, value: -40, to: Date())!, category: .foodAndDrinks, transactionType: .expense), 
+            Transaction(title: "Stock Dividends", amount: 150.00, icon: "chart.line.uptrend.xyaxis", date: Calendar.current.date(byAdding: .day, value: -20, to: Date())!, category: .investments, transactionType: .income),
+            Transaction(title: "Stock Dividends", amount: 1500.00, icon: "chart.line.uptrend.xyaxis", date: Calendar.current.date(byAdding: .day, value: -16, to: Date())!, category: .businessIncome, transactionType: .income)
 //            Transaction(title: "Travel to Rome", amount: 200.00, icon: "airplane", date: Calendar.current.date(byAdding: .day, value: -15, to: Date())!, category: .travel, transactionType: .expense),
 //            Transaction(title: "Gift from Family", amount: 100.00, icon: "gift.fill", date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!, category: .gifts, transactionType: .income),
 //            Transaction(title: "Shampoo & Soap", amount: 18.00, icon: "drop.fill", date: Calendar.current.date(byAdding: .day, value: -4, to: Date())!, category: .personalCare, transactionType: .expense)

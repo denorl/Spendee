@@ -17,8 +17,8 @@ struct ChartView: View {
     @State private var rawSelectedDate: Date?
     @State private var incomeChartGroups: [ChartGroup] = []
     @State private var expenseChartGroups: [ChartGroup] = []
-//    @State private var startDate: Date = .now.startOfMonth
-//    @State private var endDate: Date = .now.endOfMonth
+    @State private var startDate: Date = .now.startOfMonth
+    @State private var endDate: Date = .now.endOfMonth
     
     var selectedGroup: ChartGroup? {
         guard let rawSelectedDate else { return nil }
@@ -38,43 +38,26 @@ struct ChartView: View {
                 .bold()
                 .foregroundStyle(.accent)
 
-            Chart {
-                if let selectedGroup {
-                    RuleMark(x: .value("Selected Month", selectedGroup.date, unit: .weekOfMonth))
-                        .foregroundStyle(.secondary.opacity(0.5))
-                        .annotation(position: .top, overflowResolution: .init(x: .fit(to: .chart))) {
-                            AnnotationCardView()
-                        }
-                    
-                }
-                ForEach(incomeChartGroups) { group in
-                   
-                    BarMark(
-                        x: .value("Month", group.date, unit: .weekOfMonth),
-                        y: .value(group.type.rawValue, group.totalValue),
-                        width: 10
-                    )
-                    
-                    .cornerRadius(5)
-                    .position(by: .value("Category", group.category))
-                    .foregroundStyle(by: .value("Category", group.category))
-                    .opacity(rawSelectedDate == nil || group.date == selectedGroup?.date ? 1 : 0.3 )
-                }
-                
+            Chart(incomeChartGroups.filter({ $0.date >= startDate && $0.date <= endDate })) { group in
+                SectorMark(
+                    angle: .value(group.category, group.totalValue),
+                    innerRadius: .ratio(0.5),
+                    angularInset: 1.5
+                )
+                .cornerRadius(10)
+                .foregroundStyle(by: .value(group.category, group.category))
             }
             .onAppear(perform: {
                 createChartView()
             })
            
-            .frame(height: 200)
-            .chartXScale(domain: Date.now.startOfMonth...Date.now.endOfMonth)
-            .chartXAxis(.hidden)
+            .frame(height: 250)
+            
+
             .chartForegroundStyleScale(foregrounds)
-            //            .chartXScale(domain: startDate...endDate)
             
-            .chartXSelection(value: $rawSelectedDate.animation(.easeInOut))
-            
-            
+//            .chartXSelection(value: $rawSelectedDate.animation(.easeInOut))
+//            
             .chartLegend(spacing: 20) {
                 HFlow {
                     ForEach(foregrounds, id: \.key) { kvp in
@@ -91,20 +74,7 @@ struct ChartView: View {
                     }
                 }
             }
-            
-            
-            .chartYAxis {
-                
-                AxisMarks(position: .leading) { value in
-                    let doubleValue = value.as(Double.self) ?? 0
-                    
-                    
-                    AxisGridLine()
-                    AxisValueLabel {
-                        Text(axisLabel(doubleValue))
-                    }
-                }
-            }
+
         }
         .padding()
         .background {
@@ -125,12 +95,12 @@ struct ChartView: View {
         
     ]
     
-    func axisLabel(_ value: Double) -> String {
-        let intValue = Double(value)
-        let kValue = intValue / 1000
-        
-        return intValue < 1000 ? "\(intValue)" : "\(kValue)K"
-    }
+//    func axisLabel(_ value: Double) -> String {
+//        let intValue = Double(value)
+//        let kValue = intValue / 1000
+//        
+//        return intValue < 1000 ? "\(intValue)" : "\(kValue)K"
+//    }
     
     func createChartView() {
         Task.detached(priority: .high) {
@@ -148,7 +118,7 @@ struct ChartView: View {
                 
                 return calendar.compare(date1, to: date2, toGranularity: .day) == .orderedDescending
             }
-            
+               
             let incomeChartGroups = sortedGroups.compactMap { createChartGroup(from: $0, type: .income) }
             
             await MainActor.run {
@@ -158,6 +128,19 @@ struct ChartView: View {
         }
         
     }
+    
+//    private func animateChart() {
+//        guard !isAnimated else { return }
+//        isAnimated = true
+//        
+//        $chartGroups.enumerated().forEach { index, element in
+//            let delay = Double(index) * 0.05
+//            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+//                element.wrappedValue.isAnimated = true
+//            }
+//        }
+//    }
+    
 }
 
 
@@ -205,31 +188,3 @@ extension ChartView {
     
     
 }
-
-
-//            let chartGroups = sortedGroups.compactMap { dict -> ChartGroup? in
-//                let date = calendar.date(from: dict.key) ?? .init()
-//                let income = dict.value.filter { $0.transactionType == TransactionType.income.rawValue }
-//                let expense = dict.value.filter { $0.transactionType == TransactionType.expense.rawValue }
-//                let incomeTotalValue = total(income, type: .income)
-//                let expenseTotalValue = total(expense, type: .expense)
-//
-//                return .init(
-//                    date: date,
-//                    label: format(date: date, format: "MMM yy"),
-//                    types: [
-//                        .init(totalValue: incomeTotalValue, type: .income),
-//                        .init(totalValue: expenseTotalValue, type: .expense)
-//                    ])
-//
-//            }
-
-
-
-//            Text("01 Jan 2021 - 31 Jan 2021")
-//                .font(.system(.title3, design: .serif))
-//                .foregroundStyle(.accent.opacity(0.5))
-//            Text("5000€")
-//                .font(.system(.largeTitle, design: .serif))
-//                .bold()
-//                .foregroundStyle(.accent)

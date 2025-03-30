@@ -25,7 +25,7 @@ struct HeaderView<Content: View>: View {
                 Text(header)
                     .font(.system(size: headerSize, weight: headerFontWeight, design: headerFontDesign))
                     .bold()
-                
+                 
                 Spacer()
                 
                 topTrailingButton()
