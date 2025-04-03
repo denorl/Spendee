@@ -14,14 +14,14 @@ struct TransactionCardView: View {
     let transaction: Transaction
     var body: some View {
        
-            HStack(spacing: 25) {
+            HStack(spacing: 14) {
                 Image(systemName: transaction.icon)
                     .padding(.horizontal, 5)
                     .foregroundStyle(.white)
                     .background {
                         Capsule()
                             .rotationEffect(Angle(degrees: 180))
-                            .frame(width: 45, height: 60)
+                            .frame(width: 40, height: 50)
                             .foregroundStyle(.accent)
                     }
                
@@ -44,12 +44,12 @@ struct TransactionCardView: View {
             
         
             .frame(maxWidth: .infinity)
-            .frame(height: 50)
+            .frame(height: 62)
             .padding()
             .background {
                 RoundedRectangle(cornerRadius: 10)
                     .foregroundStyle(.white)
-                    .shadow(radius: 2)
+                    .shadow(radius: 0.5)
                     
                     
             }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var currentTab: Int = 0
+    @State var currentTab: Int = 2
     @Namespace var namespace
     
     var body: some View {

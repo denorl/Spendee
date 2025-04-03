@@ -89,7 +89,7 @@ struct RecentsScreen: View {
                             
                         }
                     }
-                    .padding(15)
+                    .padding(10)
                 }
                
                 .blur(radius: isShowingFilterView ? 8 : 0)

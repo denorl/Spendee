@@ -15,30 +15,56 @@ struct ChartView: View {
     @Query(animation: .snappy) private var transactions: [Transaction]
     
     @State private var rawSelectedDate: Date?
-    @State private var incomeChartGroups: [ChartGroup] = []
-    @State private var expenseChartGroups: [ChartGroup] = []
+    
+  
     @State private var startDate: Date = .now.startOfMonth
     @State private var endDate: Date = .now.endOfMonth
+    
+    @Binding var selectedType: TransactionType
+    @Binding var chartGroups: [ChartGroup] 
+   
     
     var selectedGroup: ChartGroup? {
         guard let rawSelectedDate else { return nil }
         
-        return incomeChartGroups.first {
+        return chartGroups.first {
             Calendar.current.isDate(rawSelectedDate, equalTo: $0.date, toGranularity: .day)
         }
     }
     
     var body: some View {
         VStack {
-            Text("01 Jan 2021 - 31 Jan 2021")
-                .font(.system(.title3, design: .serif))
-                .foregroundStyle(.accent.opacity(0.5))
-            Text("5000€")
+            HStack {
+                Button {
+                    changeCurrentMonth(by: -1)
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundStyle(.accent)
+                }
+                Spacer()
+                Text("\(startDate.dateAsString()) - \(endDate.dateAsString())")
+                    .font(.system(.title3, design: .serif))
+                    .foregroundStyle(.accent.opacity(0.5))
+                Spacer()
+                
+                Button {
+                    changeCurrentMonth(by: 1)
+                } label: {
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(.accent)
+                }
+
+               
+                    
+                
+            }
+            
+            Text(totalAmount.asCurrencyString())
                 .font(.system(.largeTitle, design: .serif))
                 .bold()
                 .foregroundStyle(.accent)
 
-            Chart(incomeChartGroups.filter({ $0.date >= startDate && $0.date <= endDate })) { group in
+            Chart(filteredChartGroups) { group in
                 SectorMark(
                     angle: .value(group.category, group.totalValue),
                     innerRadius: .ratio(0.5),
@@ -50,14 +76,8 @@ struct ChartView: View {
             .onAppear(perform: {
                 createChartView()
             })
-           
             .frame(height: 250)
-            
-
             .chartForegroundStyleScale(foregrounds)
-            
-//            .chartXSelection(value: $rawSelectedDate.animation(.easeInOut))
-//            
             .chartLegend(spacing: 20) {
                 HFlow {
                     ForEach(foregrounds, id: \.key) { kvp in
@@ -69,17 +89,15 @@ struct ChartView: View {
                                 .font(.caption)
                                 .foregroundStyle(kvp.value)
                         }
-                        
-
                     }
                 }
             }
-
         }
         .padding()
         .background {
             RoundedRectangle(cornerRadius: 20)
                 .fill(Color.white)
+                .shadow(radius: 0.5)
         }
     }
     
@@ -115,14 +133,13 @@ struct ChartView: View {
             let sortedGroups = groupedByDateAndCategory.sorted {
                 let date1 = calendar.date(from: $0.key.date) ?? .init()
                 let date2 = calendar.date(from: $1.key.date) ?? .init()
-                
                 return calendar.compare(date1, to: date2, toGranularity: .day) == .orderedDescending
             }
                
-            let incomeChartGroups = sortedGroups.compactMap { createChartGroup(from: $0, type: .income) }
+            let chartGroups = sortedGroups.compactMap { createChartGroup(from: $0, type: .income) }
             
             await MainActor.run {
-                self.incomeChartGroups = incomeChartGroups
+                self.chartGroups = chartGroups.sorted { $0.category < $1.category }
             }
             
         }
@@ -144,12 +161,27 @@ struct ChartView: View {
 }
 
 
-#Preview(traits: .sampleTransactionData) {
-    ChartView()
-}
+//#Preview(traits: .sampleTransactionData) {
+//    ChartView(selectedType: .constant(.income))
+//}
 
 
 extension ChartView {
+    
+    private func changeCurrentMonth(by value: Int) {
+        let calendar = Calendar.current
+        startDate = calendar.date(byAdding: .month, value: value, to: startDate) ?? .now.startOfMonth
+        endDate = calendar.date(byAdding: .month, value: value, to: endDate) ?? .now.endOfMonth
+    }
+    
+    private var filteredChartGroups: [ChartGroup] {
+        return chartGroups.filter { $0.date >= startDate && $0.date <= endDate && $0.type == selectedType }
+    }
+    
+    private var totalAmount: Double {
+        return filteredChartGroups.reduce(0) { $0 + $1.totalValue }
+    }
+    
     nonisolated func createChartGroup(from dict: Dictionary<GroupingKey, [Transaction]>.Element, type: TransactionType) -> ChartGroup? {
         let date = Calendar.current.date(from: dict.key.date) ?? .init()
         let category = dict.key.category
@@ -161,7 +193,6 @@ extension ChartView {
     
     @ViewBuilder
     func AnnotationCardView() -> some View {
-        
         if let selectedGroup = selectedGroup {
             
             VStack {

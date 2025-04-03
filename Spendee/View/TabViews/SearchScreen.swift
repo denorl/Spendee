@@ -50,7 +50,7 @@ struct SearchScreen: View {
                         }
                     }
                 }
-                .padding(15)
+                .padding(10)
             }
             .onTapGesture {
                 UIApplication.shared.endEditing()

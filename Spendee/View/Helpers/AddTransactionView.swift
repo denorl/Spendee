@@ -110,7 +110,7 @@ struct AddTransactionView: View {
                                 .foregroundStyle(.accent)
                                 .overlay {
                                     Text("Save")
-                                        .font(.title)
+                                        .font(.system(.title, design: .serif))
                                         .bold()
                                         .foregroundStyle(.white)
                                 }

@@ -16,7 +16,7 @@ struct SearchBarView: View {
                 .foregroundStyle(searchText.isEmpty ? Color.black : Color.accent)
                 .bold()
             
-            TextField("Search any recipe...", text: $searchText,onEditingChanged: { status in
+            TextField("Search any transaction...", text: $searchText,onEditingChanged: { status in
                 if status == true {
                     withAnimation(.easeInOut) {
                         headerIsVisible = false
