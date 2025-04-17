@@ -15,7 +15,9 @@ extension Color {
     struct ColorTheme {
         let backgoround = Color("BackgroundColor")
         let accent = Color("AccentColor")
+//        let primary = Color("PrimaryTextColor")
         let secondary = Color("SecondaryTextColor")
+        let elements = Color("ElementsBackgroundColor")
         
         let gradient1 = Color("BrightBlue")
         let gradient2 = Color("SoftPurple")

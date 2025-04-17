@@ -7,20 +7,19 @@
 import SwiftUI
 
 struct HeaderView<Content: View>: View {
-    @State var header: String
+    var header: String
     
     var headerSize: CGFloat
     var headerFontWeight: Font.Weight?
     var headerFontDesign: Font.Design?
+    
     
     var topTrailingButton: () -> Content
    
     var body: some View {
         
         
-        ZStack {
-            Color.background
-                .ignoresSafeArea()
+
             HStack(spacing: 10) {
                 Text(header)
                     .font(.system(size: headerSize, weight: headerFontWeight, design: headerFontDesign))
@@ -32,19 +31,26 @@ struct HeaderView<Content: View>: View {
                     .padding(.bottom, 20)
             }
             .padding(.bottom, 5)
-            .padding(.horizontal, 10)
-            
+            .padding(.top)
+            .padding(.horizontal, 15)
+       
             .hSpacing(.leading)
             .background {
-                VStack(spacing: 0) {
-                    Rectangle()
-                        .fill(.ultraThinMaterial)
-                }
-                .padding(.horizontal, -15)
-                .padding(.top, -(safeArea.top + 15))
+                
+                Color.elementsBackground.shadow(color: .gray.opacity(0.5), radius: 3, x: 2)
+                
+                    .padding(.horizontal, -20)
+                    .padding(.top, -(safeArea.top + 15))
                 
             }
-        }
+            .padding(.top, 35)
     }
     
+}
+
+
+extension HeaderView where Content == EmptyView {
+    init(header: String, headerSize: CGFloat, headerFontDesign: Font.Design?) {
+        self.init(header: header, headerSize: headerSize, headerFontDesign: headerFontDesign, topTrailingButton: { EmptyView() })
+    }
 }

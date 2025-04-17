@@ -17,7 +17,6 @@ struct ChartGroup: Identifiable {
     let category: String
     var totalValue: Double
     var type: TransactionType
-    var isAnimated: Bool = false
     
 }
 

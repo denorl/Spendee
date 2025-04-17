@@ -117,15 +117,21 @@ struct AddTransactionView: View {
                             
                         }
                     }
-                    
-
-                    
-                    
+                     
                 }
                 .padding(15)
                 Spacer()
             }
             .navigationTitle(editTransaction == nil ? "Add New Transaction" : "Edit Transaction")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Image(systemName: "xmark")
+                        .onTapGesture {
+                            dismiss()
+                            editTransaction?.isSelected = false
+                        }
+                }
+            }
             .onAppear {
                 if let editTransaction {
                     title = editTransaction.title
@@ -153,18 +159,18 @@ struct AddTransactionView: View {
             editTransaction?.date = date
             editTransaction?.category = category.rawValue
             editTransaction?.transactionType = transactionType.rawValue
+            editTransaction?.isSelected = false
             modelContext
         } else {
             let newTransaction = Transaction(title: title, amount: amount, icon: icon, date: date, category: category, transactionType: transactionType)
+            
             modelContext.insert(newTransaction)
+            print(newTransaction.amount)
         }
     }
     
 }
 
-#Preview {
-    AddTransactionView()
-}
 
 
 

@@ -15,8 +15,9 @@ extension View {
         return formatter.string(from: date)
     }
     
-    nonisolated func total(_ transactions: [Transaction], type: TransactionType) -> Double {
-        return transactions.filter({ $0.transactionType == type.rawValue}).reduce(Double.zero) { partialResult, transaction in
+    nonisolated func total(_ transactions: [Transaction], type: TransactionType?) -> Double {
+        let rawValue = type?.rawValue ?? ""
+        return transactions.filter({ $0.transactionType == rawValue}).reduce(Double.zero) { partialResult, transaction in
             partialResult + transaction.amount
         }
     }

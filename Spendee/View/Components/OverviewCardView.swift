@@ -12,6 +12,8 @@ struct OverviewCardView: View {
     @Binding var startDate: Date
     @Binding var endDate: Date
     
+    @AppStorage("currency") var currency: String?
+    
     var income: Double
     var expense: Double
    
@@ -24,7 +26,7 @@ struct OverviewCardView: View {
                 .shadow(radius: 2)
                
                 .frame(height: 200)
-                
+                 
                 
             VStack {
                 Text("\(format(date: startDate, format: "dd MMM yyyy")) - \(format(date: endDate, format: "dd MMM yyyy"))")

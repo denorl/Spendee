@@ -35,6 +35,9 @@ class Transaction {
     }
     
     @Transient
+    var isSelected: Bool = false
+    
+    @Transient
     var rawCategory: Category? {
         return Category.allCases.first(where: { category == $0.rawValue })
     }

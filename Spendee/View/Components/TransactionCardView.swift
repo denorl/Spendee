@@ -7,13 +7,25 @@
 
 import SwiftUI
 
-struct TransactionCardView: View {
+struct TransactionCardView<Actions:View>: View {
     
     @Environment(\.modelContext) private var context
     
+    @AppStorage("currency") var currency: String?
+    
+    let actions: Actions
+    
     let transaction: Transaction
+    
+    init(transaction: Transaction, @ViewBuilder actions: () -> Actions) {
+        self.transaction = transaction
+        self.actions = actions()
+    }
+    
     var body: some View {
-       
+        Menu {
+            actions
+        } label: {
             HStack(spacing: 14) {
                 Image(systemName: transaction.icon)
                     .padding(.horizontal, 5)
@@ -29,10 +41,10 @@ struct TransactionCardView: View {
                     Text(transaction.title)
                         .font(.system(size: 20, design: .serif))
                         .bold()
-                        .foregroundStyle(.black)
+                        .foregroundStyle(Color.primary)
                     Text(transaction.date.dateAsString())
                         .font(.subheadline)
-                        .foregroundStyle(.secondaryText) 
+                        .foregroundStyle(.secondaryText)
                 }
                 
                 Spacer()
@@ -41,21 +53,32 @@ struct TransactionCardView: View {
                     .foregroundStyle(transaction.transactionType == TransactionType.income.rawValue ? .green : .red)
                     .bold()
             }
-            
-        
             .frame(maxWidth: .infinity)
             .frame(height: 62)
             .padding()
             .background {
                 RoundedRectangle(cornerRadius: 10)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.elementsBackground)
                     .shadow(radius: 0.5)
                     
                     
             }
       
+        } primaryAction: {
+            print("Transaction selected, ", transaction.title)
+        }
+
+       
+  
 
 
 
+    }
+}
+
+
+extension TransactionCardView where Actions == EmptyView {
+    init(transaction: Transaction) {
+        self.init(transaction: transaction, actions: { EmptyView() })
     }
 }

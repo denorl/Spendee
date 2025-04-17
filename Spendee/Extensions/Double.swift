@@ -8,6 +8,8 @@ import SwiftUI
 
 
 extension Double {
+    
+    
     var numberFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 2
@@ -17,12 +19,23 @@ extension Double {
     }
     
     var currencyFormatter: NumberFormatter {
+        
         let formatter = NumberFormatter()
+        
+        let currencyCode = UserDefaults.standard.string(forKey: "currency") ?? "USD"
+        
+        
+        if currencyCode == "USD" {
+            let space = "\u{00a0}" // Non-breaking space
+            formatter.locale = Locale(identifier: "en_US")
+            formatter.positiveFormat = "¤\(space)#,##0.00"
+            formatter.negativeFormat = "-¤\(space)#,##0.00"
+        }
         formatter.usesGroupingSeparator = true
         formatter.maximumFractionDigits = 2
         formatter.minimumFractionDigits = 2
-        formatter.locale = Locale.current
         formatter.numberStyle = .currency
+        formatter.currencyCode = currencyCode
         return formatter
     }
     
@@ -32,6 +45,10 @@ extension Double {
     
     func asCurrencyString() -> String {
         return currencyFormatter.string(for: self) ?? ""
+    }
+    
+    func currencyString(for currency: String?) -> String {
+        return self.formatted(.currency(code: currency ?? "USD"))
     }
     
 }

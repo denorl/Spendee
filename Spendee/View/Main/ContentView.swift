@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var currentTab: Int = 2
+    @State var currentTab: Int = 0
     @Namespace var namespace
     
     var body: some View {
@@ -22,8 +22,7 @@ struct ContentView: View {
                     .tag(1)
                 StatsScreen()
                     .tag(2)
-                SettingsScreen()
-                    .tag(3)
+               
             }
            
             .edgesIgnoringSafeArea(.all)
@@ -36,20 +35,21 @@ struct ContentView: View {
                 navBarItem(imageName: "magnifyingglass", tab: 1)
                 Spacer()
                 navBarItem(imageName: "chart.bar", tab: 2)
-                Spacer()
-                navBarItem(imageName: "gear", tab: 3)
-                
+               
                 
             }
-            
+          
         }
+        
         .padding(.horizontal)
         .padding(.top, 5)
         .background(
-            Color.white.shadow(color: .gray.opacity(0.5), radius: 3, x: 2)
+            Color.elementsBackground.shadow(color: .gray.opacity(0.5), radius: 3, x: 2)
                 .ignoresSafeArea()
         )
     }
+        .ignoresSafeArea(.keyboard)
+        
     }
 }
 

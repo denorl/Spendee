@@ -75,5 +75,62 @@ extension Category {
         }
     }
     
+    var gradient: AnyGradient {
+        switch self {
+        case .foodAndDrinks:
+            Color.mint.gradient
+        case .groceries:
+            Color.pink.gradient
+        case .transportation:
+            Color.purple.gradient
+        case .housing:
+            Color.red.gradient
+        case .utilities:
+            Color.blue.gradient
+        case .healthcare:
+            Color.green.gradient
+        case .entertainment:
+            Color.cyan.gradient
+        case .shopping:
+            Color.yellow.gradient
+        case .subscriptions:
+            Color.orange.gradient
+        case .education:
+            Color.green.gradient
+        case .travel:
+            Color.indigo.gradient
+        case .giftsAndDonations:
+            Color.brown.gradient
+        case .insurance:
+            Color.teal.gradient
+        case .personalCare:
+            Color.red.gradient
+        case .debtsAndLoans:
+            Color.pink.gradient
+        case .pets:
+            Color.purple.gradient
+        case .savings:
+            Color.cyan.gradient
+        case .salary:
+            Color.blue.gradient
+        case .freelance:
+            Color.mint.gradient
+        case .investments:
+            Color.yellow.gradient
+        case .gifts:
+            Color.gray.gradient
+        case .refunds:
+            Color.primary.gradient
+        case .rentalIncome:
+            Color.secondary.gradient
+        case .businessIncome:
+            Color.orange.gradient
+        case .passiveIncome:
+            Color.green.gradient
+        case .other:
+            Color.gray.gradient
+        }
+    }
+    
 
 }
